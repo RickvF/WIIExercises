@@ -15,7 +15,7 @@ public class Canvas extends JFrame
 
 	public static void main(String[] args)
 	{
-		new Canvas();
+		new Canvas(); 
 	}
 	
 	public Canvas()
