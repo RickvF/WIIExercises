@@ -30,12 +30,10 @@ import wiiusej.wiiusejevents.wiiuseapievents.StatusEvent;
 public class WiiMoteTracker2 implements WiimoteListener
 {
 	private Wiimote[] wiimotes;
-	private int player1 = 0;
-	private int player2 = 0;
-	private int player3 = 0;
-	private int player4 = 0;
-	private int x;
-	private int y;
+	private int nunchukX;
+	private int nunchukY;
+	private int nunchukRoll;
+	private boolean nunchukConnected = false;
 	public WiiMoteTracker2()
 	{
 		//Searching for WiiRemotes
@@ -71,13 +69,18 @@ public class WiiMoteTracker2 implements WiimoteListener
 		
 		
 	}
-	public int getX()
+	public int getNunchukX()
 	{
-		return x;
+		return nunchukX;
 	}
-	public int getY()
+	public int getNunchukY()
 	{
-		return y;
+		return nunchukY;
+	}
+	
+	public int getNunchukRoll()
+	{
+		return nunchukRoll;
 	}
 	
 	@Override
@@ -110,6 +113,7 @@ public class WiiMoteTracker2 implements WiimoteListener
 	@Override
 	public void onExpansionEvent(ExpansionEvent arg0)
 	{
+		if(nunchukConnected){
 		if(arg0 instanceof NunchukEvent)
 		{
 			NunchukEvent nc = (NunchukEvent) arg0;
@@ -118,12 +122,14 @@ public class WiiMoteTracker2 implements WiimoteListener
 				double cos = Math.cos(Math.toRadians(nc.getNunchukJoystickEvent().getAngle()));
 				double sin = Math.sin(Math.toRadians(nc.getNunchukJoystickEvent().getAngle()));
 				double mag = nc.getNunchukJoystickEvent().getMagnitude();
-				cos = Math.round((cos*mag)*100+190);
-				sin = Math.round((sin*mag)*100+190);
-				x = (int)(cos);
-				y = (int)(sin);
-				System.out.println("X "+ x);
-				System.out.println("Y " + y);
+				cos = Math.round((cos*mag)*100+240);
+				sin = Math.round((sin*mag)*100+240);
+				nunchukX = (int)(cos);
+				nunchukY = (int)(sin);
+			}
+			if(nc.isThereMotionSensingEvent())
+			{
+			nunchukRoll = (int) nc.getNunchukMotionSensingEvent().getOrientation().getARoll();
 			}
 			if(nc.getButtonsEvent().isButtonCJustPressed())
 			{
@@ -135,20 +141,22 @@ public class WiiMoteTracker2 implements WiimoteListener
 				JOptionPane.showMessageDialog(null, "Button Z pressed");
 			}
 		}
+		}
 		
 	}
 
 	@Override
 	public void onGuitarHeroInsertedEvent(GuitarHeroInsertedEvent arg0)
 	{
-		// TODO Auto-generated method stub
+		
 		
 	}
 
 	@Override
 	public void onGuitarHeroRemovedEvent(GuitarHeroRemovedEvent arg0)
 	{
-		// TODO Auto-generated method stub
+		
+
 		
 	}
 
@@ -169,13 +177,13 @@ public class WiiMoteTracker2 implements WiimoteListener
 	@Override
 	public void onNunchukInsertedEvent(NunchukInsertedEvent arg0)
 	{
+		nunchukConnected = true;
 	}
 
 	@Override
 	public void onNunchukRemovedEvent(NunchukRemovedEvent arg0)
-	{
-		JOptionPane.showMessageDialog(null, "Thankyou");
-		
+	{		
+		nunchukConnected = false;
 	}
 
 	@Override

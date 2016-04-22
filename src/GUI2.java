@@ -34,7 +34,7 @@ public class GUI2 extends JFrame
 		setContentPane(new Panel());
 		setVisible(true);
 		setSize(500, 500);
-		setResizable(true);
+		setResizable(false);
 		setLocationRelativeTo(null);
 	}
 	//JPanel Class
@@ -67,15 +67,14 @@ public class GUI2 extends JFrame
 		{
 			super.paintComponent(g);
 			Graphics2D g2d = (Graphics2D) g;
-			g2d.drawString("Y: " + (track.getX()-200) + " X: " + (track.getY()- 200), 10, 10);
+			g2d.drawString("Y: " + (track.getNunchukX()-240) + " X: " + (track.getNunchukY()- 240), 10, 10);
 			g2d.translate(250, 250);
-			g2d.rotate((Math.PI/180)*(-90));
-			g2d.translate(-150, -250);
-			g2d.drawLine(200, 75, 200, 325);
-			g2d.drawLine(75, 200, 325, 200);
-			g2d.drawOval(100,100, 200, 200);
-			g2d.fillOval(track.getX(), track.getY(),20,20);
-			
+			g2d.rotate((Math.PI/180)*(-90+track.getNunchukRoll()));
+			g2d.translate(-250, -250);
+			g2d.drawLine(250, 150, 250,350 );
+			g2d.drawLine(150, 250, 350, 250);
+			g2d.drawOval(150,150, 200, 200);
+			g2d.fillOval(track.getNunchukX(), track.getNunchukY(),20,20);
 		}
 	}
 
