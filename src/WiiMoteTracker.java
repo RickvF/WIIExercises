@@ -44,7 +44,6 @@ public class WiiMoteTracker implements WiimoteListener
 	private int currentSimon = 0;							//The number of the current Field that has to light up, ranged 0-3
 	private Color changedColor;								//The old color from the changed field
 	private Timer timer;									//Timer which contains the amount of time to wait before changing the color back to the original one
-	private Wiimote wiimote;								//Wiiremote which is used
 	private int changedColorLocation;						//Location of the changedColor in the ArrayList simon.
 	private Wiimote[] wiimotes;
 	private int player1 = 0;
