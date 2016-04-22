@@ -18,11 +18,8 @@ public class WiiRemoteTracker2 implements WiimoteListener
 {
 	private Wiimote wiimote;
 	short X;
-	
-	
-	
-	
 	short Z;
+	short Y;
 	public WiiRemoteTracker2()
 	{
 			
@@ -99,10 +96,8 @@ public class WiiRemoteTracker2 implements WiimoteListener
 	public void onMotionSensingEvent(MotionSensingEvent arg0)
 	{
 		X = arg0.getRawAcceleration().getX();
-		
-		
-		
 		Z = arg0.getRawAcceleration().getZ();
+		Y = arg0.getRawAcceleration().getX();
 	}
 
 	@Override
@@ -129,6 +124,7 @@ public class WiiRemoteTracker2 implements WiimoteListener
 		return X;
 	}
 	
+
 	
 	
 	
@@ -143,5 +139,9 @@ public class WiiRemoteTracker2 implements WiimoteListener
 	public short getZ()
 	{
 		return Z;
+	}
+	public short getY()
+	{
+		return Y;
 	}
 }

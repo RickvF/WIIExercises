@@ -42,7 +42,11 @@ public class Canvas extends JFrame
 		
 		
 		ArrayList<Short> z;
+
+		ArrayList<Short> y;
+
 		int tijd = 0;
+		short oldY = 0;
 		
 		public Panel()
 		{
@@ -113,6 +117,23 @@ public class Canvas extends JFrame
 						}
 						z.add(track.getZ());
 					}
+					if(y.size() < 300)
+					{
+						y.add(track.getY());
+					}
+					else
+					{
+						Iterator<Short> itr = y.iterator();
+						while(itr.hasNext())
+						{
+							if(itr.next().equals(y.get(0)))
+							{
+								itr.remove();
+							}
+						}
+						
+						y.add(track.getY());
+					}
 					tijd = 0;
 					repaint();
 				}
@@ -131,26 +152,21 @@ public class Canvas extends JFrame
 			g2d.setColor(Color.BLACK);
 			g2d.drawLine(50, 20, 50, 350);
 			g2d.drawLine(50, 155, 350, 155);
+			
 			Iterator<Short> itr = x.iterator();
 			short previousX=0;
 			short currentX = 0;
 			while(itr.hasNext())
 			{
-				if(tijd < 1)
-				{
-					previousX = itr.next();
-				}
-				else
-				{
-					previousX=currentX;
-				}
-				 currentX = itr.next();
+				previousX=currentX;
 				
-				g2d.drawLine(tijd+48,(int)previousX+28, tijd+49, (int)currentX+28);
+				currentX = itr.next();
+				g2d.setColor(Color.RED);
+				g2d.drawLine(tijd+49,(int)previousX+33, tijd+50, (int)currentX+33);
 				tijd++;
-				
 			}
 			
+
 			
 			
 			
@@ -197,6 +213,18 @@ public class Canvas extends JFrame
 				tijd++;
 				
 			}
+
+			Iterator<Short> itY = y.iterator();
+			while(itY.hasNext())
+			{
+				short s = itY.next();
+				g2d.setColor(Color.BLUE);
+				g2d.drawLine(tijd+49, (int)oldY+33, tijd+50, (int)s+33);
+				tijd++;
+				oldY = s;
+			}
+			
+			
 		}
 	}
 
