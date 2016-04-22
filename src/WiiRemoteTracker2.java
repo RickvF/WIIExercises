@@ -16,9 +16,8 @@ import wiiusej.wiiusejevents.wiiuseapievents.StatusEvent;
 
 public class WiiRemoteTracker2 implements WiimoteListener
 {
-	Wiimote wiimote; 
-	short X;
-
+	Wiimote wiimote;
+	
 	public WiiRemoteTracker2()
 	{
 			
@@ -29,11 +28,11 @@ public class WiiRemoteTracker2 implements WiimoteListener
 			wiimote.setLeds(false, true, true, true);
 			wiimote.activateIRTRacking();
 			wiimote.addWiiMoteEventListeners(this);
-			wiimote.activateMotionSensing();
-			wiimote.activateContinuous();
+	
 			// Set IR sensivity stuff
 			wiimote.setIrSensitivity(0);
 			wiimote.setIrSensitivity(3);
+			wiimote.activateMotionSensing();
 		}
 	}	
 	
@@ -46,7 +45,7 @@ public class WiiRemoteTracker2 implements WiimoteListener
 	@Override
 	public void onClassicControllerInsertedEvent(ClassicControllerInsertedEvent arg0)
 	{
-		// TODO Auto-generated method stub
+		
 		
 	}
 
@@ -67,7 +66,6 @@ public class WiiRemoteTracker2 implements WiimoteListener
 	@Override
 	public void onExpansionEvent(ExpansionEvent arg0)
 	{		
-		
 		
 	}
 
@@ -95,27 +93,23 @@ public class WiiRemoteTracker2 implements WiimoteListener
 	@Override
 	public void onMotionSensingEvent(MotionSensingEvent arg0)
 	{
-		X = arg0.getRawAcceleration().getX();
-
 //		System.out.println("X: " + arg0.getRawAcceleration().getX());
 //		System.out.println("Y: " + arg0.getRawAcceleration().getY());
 //		System.out.println("Z: " + arg0.getRawAcceleration().getZ());
-//		System.out.println(arg0.toString());
+		System.out.println(arg0.toString());
 		
-
 	}
 
 	@Override
 	public void onNunchukInsertedEvent(NunchukInsertedEvent arg0)
 	{
-		System.out.println("Nunchuck insert");
-
+		System.out.println("Nunchuck insert!!!!");
 	}
 
 	@Override
 	public void onNunchukRemovedEvent(NunchukRemovedEvent arg0)
 	{
-		System.out.println("Nunchuck removed");
+		System.out.println("Nunchuck removed!!!!!!!!!!");
 	}
 
 	@Override
@@ -123,10 +117,5 @@ public class WiiRemoteTracker2 implements WiimoteListener
 	{
 		// TODO Auto-generated method stub
 		
-	}
-	
-	public short getX()
-	{
-		return X;
 	}
 }
