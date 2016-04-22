@@ -45,47 +45,13 @@ public class WiiMoteTracker implements WiimoteListener
 		
 		this.s = s;
 		
-<<<<<<< HEAD
 		Wiimote[] wiimotes = WiiUseApiManager.getWiimotes(2, true);
-=======
-		Wiimote[] wiimotes = WiiUseApiManager.getWiimotes(1, true);
->>>>>>> 828e5e70b4cdecffd9f912f29122104cb6d9e358
 		if(wiimotes != null)
 		{
 			wiimote = wiimotes[0];
 			wiimote.setLeds(false, true, true, true);
 			wiimote.addWiiMoteEventListeners(this);
-<<<<<<< HEAD
 		}	
-=======
-	
-			// Set IR sensivity stuff
-			wiimote.setIrSensitivity(0);
-			wiimote.setIrSensitivity(3);
-		}
-//		if(wiimotes.length > 1)
-//		{
-//			wiimote = wiimotes[0];
-//			wiimote.setLeds(false, true, true, true);
-//			wiimote.activateIRTRacking();
-//			wiimote.addWiiMoteEventListeners(this);
-//	
-//			// Set IR sensivity stuff
-//			wiimote.setIrSensitivity(0);
-//			wiimote.setIrSensitivity(3);
-//			
-//				
-//			wiimote2 = wiimotes[1];
-//			wiimote2.setLeds(true, true, true, true);
-//			wiimote2.activateIRTRacking();
-//			wiimote2.addWiiMoteEventListeners(this);
-//	
-//			// Set IR sensivity stuff
-//			wiimote2.setIrSensitivity(0);
-//			wiimote2.setIrSensitivity(3);
-//		}
-		
->>>>>>> 828e5e70b4cdecffd9f912f29122104cb6d9e358
 		ActionListener update = new ActionListener()
 		{
 
@@ -93,8 +59,6 @@ public class WiiMoteTracker implements WiimoteListener
 			public void actionPerformed(ActionEvent arg0)
 			{
 				timer.stop();
-				System.out.println("Timer Tick");
-
 				changeColorBack();
 			}
 			
@@ -109,10 +73,7 @@ public class WiiMoteTracker implements WiimoteListener
 	 
 	public void startSimon()
 	{
-		System.out.println("C"+currentSimon);
-		System.out.println("S"+ simon.size());
-		System.out.println("CS "+ simon.get(currentSimon));
-		 q = simon.get(currentSimon)%4 ;
+		q = simon.get(currentSimon)%4 ;
 		changedColor = colors.get(q);
 		colors.set(q, Color.BLACK);
 		timer.start();
@@ -128,16 +89,12 @@ public class WiiMoteTracker implements WiimoteListener
 	}
 	public void changeColorBack()
 	{
-		System.out.println("CB");
 		wiimote.deactivateRumble();
 		colors.set(q,changedColor);
 		if( simon.size()-1 > currentSimon)
 		{
-			
 				currentSimon++;
 				startSimon();
-			
-			
 		}
 	}
 	
@@ -146,34 +103,16 @@ public class WiiMoteTracker implements WiimoteListener
 		try{
 		if(button == simon.get(counter))
 		{
-			
 			q = simon.get(counter) % 4;
 			changedColor = colors.get(q);
 			colors.set(q, Color.PINK);
 			timer.start();
 			counter++;
 		}
-		
-		
 		else
 		{
 			wiimote.activateRumble();
-<<<<<<< HEAD
 			timer.start();
-=======
-			//wiimote2.activateRumble();
-			timer.start();
-			while(!changeColor)
-			{
-				System.out.print(changeColor);
-				
-			}
-			timer.stop();			
-			changeColor = false;
-			wiimote.deactivateRumble();
-			//wiimote2.deactivateRumble();
-			
->>>>>>> 828e5e70b4cdecffd9f912f29122104cb6d9e358
 			simon.clear();
 			counter = 0;
 			currentSimon =0;
@@ -185,36 +124,17 @@ public class WiiMoteTracker implements WiimoteListener
 			simon.clear();
 			counter = 0;
 			currentSimon =0;
-			
 		}
-		
 	}
 	@Override
 	public void onButtonsEvent(WiimoteButtonsEvent arg0)
 	{
-	
-
 			if(arg0.isButtonOnePressed()&& lastPressed != arg0.getButtonsJustPressed())
 			{ 
 				if(counter != simon.size() )
 				{
 					wiimote.activateRumble();
-<<<<<<< HEAD
 					timer.start();
-=======
-					//wiimote2.activateRumble();
-					timer.start();
-					while(!changeColor)
-					{
-						System.out.print(changeColor);
-						
-					}
-					timer.stop();			
-					changeColor = false;
-					wiimote.deactivateRumble();
-					//wiimote2.deactivateRumble();
-					
->>>>>>> 828e5e70b4cdecffd9f912f29122104cb6d9e358
 					simon.clear();
 				}
 				else{
@@ -222,10 +142,8 @@ public class WiiMoteTracker implements WiimoteListener
 				currentSimon =0;
 				startSimon();
 				}
-				
 				counter = 0;
 			}
-			
 	if(!timer.isRunning()){
 		if(arg0.isButtonUpPressed())
 		{
