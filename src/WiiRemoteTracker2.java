@@ -20,6 +20,7 @@ public class WiiRemoteTracker2 implements WiimoteListener
 	short X;
 	short Z;
 	short Y;
+	float gfY;
 	public WiiRemoteTracker2()
 	{
 			
@@ -35,6 +36,10 @@ public class WiiRemoteTracker2 implements WiimoteListener
 			wiimote.setIrSensitivity(0);
 			wiimote.setIrSensitivity(3);
 			wiimote.activateMotionSensing();
+			
+			wiimote.setAccelerationThreshold(-5);
+			wiimote.activateSmoothing();
+			wiimote.setAlphaSmoothingValue(3.0f);
 		}
 	}	
 	
@@ -95,9 +100,12 @@ public class WiiRemoteTracker2 implements WiimoteListener
 	@Override
 	public void onMotionSensingEvent(MotionSensingEvent arg0)
 	{
+		
 		X = arg0.getRawAcceleration().getX();
 		Z = arg0.getRawAcceleration().getZ();
-		Y = arg0.getRawAcceleration().getX();
+		Y = arg0.getRawAcceleration().getY();
+		gfY = arg0.getGforce().getZ();
+		
 	}
 
 	@Override
@@ -124,18 +132,6 @@ public class WiiRemoteTracker2 implements WiimoteListener
 		return X;
 	}
 	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	public short getZ()
 	{
 		return Z;
@@ -143,5 +139,10 @@ public class WiiRemoteTracker2 implements WiimoteListener
 	public short getY()
 	{
 		return Y;
+	}
+	
+	public float getgfY()
+	{
+		return gfY;
 	}
 }
