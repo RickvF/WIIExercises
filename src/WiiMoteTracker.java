@@ -3,13 +3,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
 import wiiusej.WiiUseApiManager;
 import wiiusej.Wiimote;
 import wiiusej.wiiusejevents.physicalevents.ExpansionEvent;
+import wiiusej.wiiusejevents.physicalevents.GuitarHeroEvent;
 import wiiusej.wiiusejevents.physicalevents.IREvent;
 import wiiusej.wiiusejevents.physicalevents.MotionSensingEvent;
+import wiiusej.wiiusejevents.physicalevents.NunchukButtonsEvent;
 import wiiusej.wiiusejevents.physicalevents.NunchukEvent;
 import wiiusej.wiiusejevents.physicalevents.WiimoteButtonsEvent;
 import wiiusej.wiiusejevents.utils.WiimoteListener;
@@ -273,7 +276,17 @@ public class WiiMoteTracker implements WiimoteListener
 
 	@Override
 	public void onExpansionEvent(ExpansionEvent arg0)
-	{				
+	{
+		if(arg0 instanceof NunchukEvent)
+		{
+			NunchukEvent nc = (NunchukEvent)arg0;
+			
+			if(nc.getButtonsEvent().isButtonCJustPressed()|| nc.getButtonsEvent().isButtonZJustPressed())
+			{
+				JOptionPane.showMessageDialog(null, "Stop Pushing nunchuk buttons");
+			}
+		}
+		
 	}
 
 	@Override
@@ -307,14 +320,13 @@ public class WiiMoteTracker implements WiimoteListener
 	@Override
 	public void onNunchukInsertedEvent(NunchukInsertedEvent arg0)
 	{
-		
-		
+		JOptionPane.showMessageDialog(null, "Nunchucks are not Supported, please remove the nunchuck");	
 	}
 
 	@Override
 	public void onNunchukRemovedEvent(NunchukRemovedEvent arg0)
 	{
-		
+		JOptionPane.showMessageDialog(null, "Thankyou");
 		
 	}
 
