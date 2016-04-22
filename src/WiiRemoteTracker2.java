@@ -16,17 +16,11 @@ import wiiusej.wiiusejevents.wiiuseapievents.StatusEvent;
 
 public class WiiRemoteTracker2 implements WiimoteListener
 {
-<<<<<<< HEAD
+
 	Wiimote wiimote;
 	
-=======
-	public static void main(String[] args)
-	{
-		new WiiRemoteTracker2();
-	}
-	
-	Wiimote wiimote;
->>>>>>> ccef0f718227f9427b5845e626004ab9489c5f2d
+	short X;
+
 	public WiiRemoteTracker2()
 	{
 			
@@ -103,17 +97,14 @@ public class WiiRemoteTracker2 implements WiimoteListener
 	@Override
 	public void onMotionSensingEvent(MotionSensingEvent arg0)
 	{
-<<<<<<< HEAD
+		X = arg0.getRawAcceleration().getX();
+
 //		System.out.println("X: " + arg0.getRawAcceleration().getX());
 //		System.out.println("Y: " + arg0.getRawAcceleration().getY());
 //		System.out.println("Z: " + arg0.getRawAcceleration().getZ());
 //		System.out.println(arg0.toString());
 		
-=======
-		System.out.println(arg0.getGforce()) ;
-		System.out.println(arg0.getOrientation()) ;
-		System.out.println(arg0.getRawAcceleration()) ;
->>>>>>> ccef0f718227f9427b5845e626004ab9489c5f2d
+
 	}
 
 	@Override
@@ -134,5 +125,10 @@ public class WiiRemoteTracker2 implements WiimoteListener
 	{
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public short getX()
+	{
+		return X;
 	}
 }
