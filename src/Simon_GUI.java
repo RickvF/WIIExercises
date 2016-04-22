@@ -7,44 +7,49 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-
+/**
+ * Simon Says (Final Version)
+ * @author Sascha Worms
+ * @author Rick van Fessem
+ * @version Final 22-04-2016
+ * @category games
+ * Description : Simple Simon Says game that uses four colored fields which will light up. 
+ * The user then has to mimick these moves using the buttons on the wiiRemote.
+ * 
+ * This Class the User Interface
+ */
 public class Simon_GUI extends JFrame
 {
-	Simon_GUI instance;
-	
+	//Creating a new Instance of the game
 	public static void main(String[] args)
 	{
 		new Simon_GUI();
 	}
-	
+	//Constructor of Simon_GUI() Creating GUI and setting default size
 	public Simon_GUI()
 	{
 		super("Simon");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		setContentPane(new Panel());
-		instance = this;
-		
 		setVisible(true);
 		setSize(500, 500);
 		setResizable(false);
 		setLocationRelativeTo(null);
 	}
-	
+	//JPanel Class
 	class Panel extends JPanel
 	{
-		WiiMoteTracker track;
-		Timer time;
+		WiiMoteTracker track; //remote with game commands
+		Timer time;           //timer for updating GUI
 		
 		public Panel()
 		{
-			super();
-			
-			track = new WiiMoteTracker(instance);
-			
+			super();			
+			track = new WiiMoteTracker();
+			//repainting the user interface each timer tick
 			ActionListener update = new ActionListener()
 			{
-
 				@Override
 				public void actionPerformed(ActionEvent arg0)
 				{
@@ -53,7 +58,8 @@ public class Simon_GUI extends JFrame
 				
 			};
 			
-			time = new Timer(1000/10, update);
+			//setting refreshrate at 60fps
+			time = new Timer(1000/60, update);
 			time.start();
 		}
 		
@@ -61,8 +67,8 @@ public class Simon_GUI extends JFrame
 		{
 			super.paintComponent(g);
 			Graphics2D g2d = (Graphics2D) g;
+			//painting rectangles whith colors from WiiMoteTracker track
 			g2d.setColor(track.getColors().get(0));
-
 			g2d.fillRect(125, 0, 125, 125);
 			g2d.setColor(track.getColors().get(1));
 			g2d.fillRect(0, 125, 125, 125);

@@ -21,37 +21,53 @@ import wiiusej.wiiusejevents.wiiuseapievents.GuitarHeroRemovedEvent;
 import wiiusej.wiiusejevents.wiiuseapievents.NunchukInsertedEvent;
 import wiiusej.wiiusejevents.wiiuseapievents.NunchukRemovedEvent;
 import wiiusej.wiiusejevents.wiiuseapievents.StatusEvent;
-
+/**
+ * Simon Says (Final Version)
+ * @author Sascha Worms
+ * @author Rick van Fessem
+ * @version Final 22-04-2016
+ * @category games
+ * Description : Simple Simon Says game that uses four colored fields which will light up. 
+ * The user then has to mimick these moves using the buttons on the wiiRemote.
+ * 
+ * This Class Contains the actual Game
+ */
 public class WiiMoteTracker implements WiimoteListener
 {
-	private ArrayList<Integer> simon = new ArrayList<>();
-	private ArrayList<Color> colors = new ArrayList<>();
-	private short lastPressed;
-	private int counter = 0 ;
-	private int currentSimon = 0;
-	private Color changedColor;
-	private Simon_GUI s;	
-	private Timer timer;	
-	private Wiimote wiimote;	
-	boolean changeColor = false;
-	private int q;
+	private ArrayList<Integer> simon = new ArrayList<>();	//Contains the moves the user has to mimic
+	private ArrayList<Color> colors = new ArrayList<>();	//Contains the possible colors for the buttons
+	private short lastPressed; 								//The button which was last pressed on the remote. Used to check for double running a round
+	private int pressCounter = 0 ;							//Counter for the amount of buttons pressed
+	private int currentSimon = 0;							//The number of the current Field that has to light up, ranged 0-3
+	private Color changedColor;								//The old color from the changed field
+	private Timer timer;									//Timer which contains the amount of time to wait before changing the color back to the original one
+	private Wiimote wiimote;								//Wiiremote which is used
+	private int changedColorLocation;						//Location of the changedColor in the ArrayList simon.
 	
-	public WiiMoteTracker(Simon_GUI s)
+	public WiiMoteTracker()
 	{
+		//adds button colors to array
 		colors.add(Color.RED);
 		colors.add(Color.BLUE);
 		colors.add(Color.YELLOW);
 		colors.add(Color.GREEN);
 		
-		this.s = s;
-		
-		Wiimote[] wiimotes = WiiUseApiManager.getWiimotes(2, true);
+		//Searching for WiiRemotes
+		Wiimote[] wiimotes = WiiUseApiManager.getWiimotes(1, true);
+		//checking if there are wii remotes connected. If so set led 2,3,4 on
+		//else exit program
 		if(wiimotes != null)
 		{
 			wiimote = wiimotes[0];
 			wiimote.setLeds(false, true, true, true);
 			wiimote.addWiiMoteEventListeners(this);
-		}	
+		}
+		else
+		{
+			System.out.println("No Wii Remotes found");
+			System.exit(0);
+		}
+		//Timer which on tick changes the color of the rectangle back to the original one.
 		ActionListener update = new ActionListener()
 		{
 
@@ -63,22 +79,24 @@ public class WiiMoteTracker implements WiimoteListener
 			}
 			
 		};
-		
+		//time the color stays changed
 		timer = new Timer(500, update);
 	}
+	 //return ArrayList<Color> colors with all the current colors.
 	public ArrayList<Color> getColors()
 	{
 		return colors;
 	}
-	 
+	
+	//Changing Color of current rectangle 
 	public void startSimon()
 	{
-		q = simon.get(currentSimon)%4 ;
-		changedColor = colors.get(q);
-		colors.set(q, Color.BLACK);
+		changedColorLocation = simon.get(currentSimon)%4 ;
+		changedColor = colors.get(changedColorLocation);
+		colors.set(changedColorLocation, Color.BLACK);
 		timer.start();
 	}
-	
+	//@returns int score - > amount of rounds completed
 	public int getScore()
 	{
 		if(simon.size() > 0)
@@ -87,34 +105,37 @@ public class WiiMoteTracker implements WiimoteListener
 		}
 		return 0;
 	}
+	//Changes color back to the original one
+	//Also stops timer and rumble if necesairy
 	public void changeColorBack()
 	{
 		wiimote.deactivateRumble();
-		colors.set(q,changedColor);
+		colors.set(changedColorLocation,changedColor);
 		if( simon.size()-1 > currentSimon)
 		{
 				currentSimon++;
 				startSimon();
 		}
 	}
-	
+	//checks if the button pressed is the same as the one in the simon arraylist of the current round
+	//rumbles and ends round if wrong
 	public void checkSimon(int button)
 	{
 		try{
-		if(button == simon.get(counter))
+		if(button == simon.get(pressCounter))
 		{
-			q = simon.get(counter) % 4;
-			changedColor = colors.get(q);
-			colors.set(q, Color.PINK);
+			changedColorLocation = simon.get(pressCounter) % 4;
+			changedColor = colors.get(changedColorLocation);
+			colors.set(changedColorLocation, Color.PINK);
 			timer.start();
-			counter++;
+			pressCounter++;
 		}
 		else
 		{
 			wiimote.activateRumble();
 			timer.start();
 			simon.clear();
-			counter = 0;
+			pressCounter = 0;
 			currentSimon =0;
 		}}
 		catch(Exception e)
@@ -122,16 +143,19 @@ public class WiiMoteTracker implements WiimoteListener
 			wiimote.activateRumble();
 			timer.start();
 			simon.clear();
-			counter = 0;
+			pressCounter = 0;
 			currentSimon =0;
 		}
 	}
+	//Handles the buttons pressed on the wii remote.
+	
 	@Override
 	public void onButtonsEvent(WiimoteButtonsEvent arg0)
-	{
+		{
+			//Starts a new round if the current round is completed and the last button wasn't 1
 			if(arg0.isButtonOnePressed()&& lastPressed != arg0.getButtonsJustPressed())
 			{ 
-				if(counter != simon.size() )
+				if(pressCounter != simon.size() )
 				{
 					wiimote.activateRumble();
 					timer.start();
@@ -142,31 +166,39 @@ public class WiiMoteTracker implements WiimoteListener
 				currentSimon =0;
 				startSimon();
 				}
-				counter = 0;
+				pressCounter = 0;
 			}
+	//checks if timer is running. If not running start Comparing of buttons to simon. 
 	if(!timer.isRunning()){
 		if(arg0.isButtonUpPressed())
 		{
 			checkSimon(0);
 		}
-		if(arg0.isButtonDownPressed())
+		else if(arg0.isButtonDownPressed())
 		{
 			checkSimon(2);
 		}
-		if(arg0.isButtonLeftPressed())
+		else if(arg0.isButtonLeftPressed())
 		{
 			checkSimon(1);
 		}
-		if(arg0.isButtonRightPressed())
+		else if(arg0.isButtonRightPressed())
 		{
 			checkSimon(3);
 		}
-		if(arg0.isButtonAPressed() && arg0.isButtonBPressed())
+		else
 		{
-			System.exit(0);
+			checkSimon(-1);			
 		}
-		lastPressed = arg0.getButtonsJustPressed();	
-		}
+	}
+	//exits game if A&B are pressed together.
+	if(arg0.isButtonAPressed() && arg0.isButtonBPressed())
+	{
+		wiimote.deactivateRumble();
+		System.exit(0);
+	}
+	//registers lastButtonPressed
+	lastPressed = arg0.getButtonsJustPressed();	
 	}
 
 	@Override
