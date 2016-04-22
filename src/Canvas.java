@@ -37,16 +37,16 @@ public class Canvas extends JFrame
 		Timer time;
 		ArrayList<Short> x;
 		
-		
-		
-		
-		
 		ArrayList<Short> z;
 
 		ArrayList<Short> y;
+		ArrayList<Float> gfY;
 
 		int tijd = 0;
 		short oldY = 0;
+		short previousZ = 0;
+		short previousX = 0;
+		float oldGf = 0;
 		
 		public Panel()
 		{
@@ -56,11 +56,11 @@ public class Canvas extends JFrame
 			
 			x = new ArrayList<>();
 			
-			
-			
-			
-			
 			z = new ArrayList<>();
+			
+			y = new ArrayList<>();
+			
+			gfY = new ArrayList<>();
 			
 			ActionListener update = new ActionListener()
 			{
@@ -71,69 +71,76 @@ public class Canvas extends JFrame
 					if(x.size() < 300)
 					{
 						x.add(track.getX());
-						
-						
-						
-						
-						z.add(track.getZ());
 					}
 					else
 					{
-						Iterator<Short> itr = x.iterator();
-						while(itr.hasNext())
+						Iterator<Short> itrx = x.iterator();
+						while(itrx.hasNext())
 						{
-							if(itr.next().equals(x.get(0)))
+							if(itrx.next().equals(x.get(0)))
 							{
-								itr.remove();
+								itrx.remove();
 							}
 						}
 						
 						x.add(track.getX());
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						Iterator<Short> itr2=z.iterator();
-						while(itr2.hasNext())
-						{
-							if(itr2.next().equals(z.get(0)))
-									{
-								itr2.remove();
-									}
-						}
-						z.add(track.getZ());
 					}
+					
 					if(y.size() < 300)
 					{
 						y.add(track.getY());
 					}
 					else
 					{
-						Iterator<Short> itr = y.iterator();
-						while(itr.hasNext())
+						Iterator<Short> itry = y.iterator();
+						while(itry.hasNext())
 						{
-							if(itr.next().equals(y.get(0)))
+							if(itry.next().equals(y.get(0)))
 							{
-								itr.remove();
+								itry.remove();
 							}
 						}
 						
 						y.add(track.getY());
 					}
+					
+					if(z.size() < 300)
+					{
+						z.add(track.getZ());
+					}
+					else
+					{
+						Iterator<Short> itrz = z.iterator();
+						while(itrz.hasNext())
+						{
+							if(itrz.next().equals(z.get(0)))
+							{
+								itrz.remove();
+							}
+						}
+						
+						z.add(track.getZ());
+					}
+					
+					
+					if(gfY.size() < 300)
+					{
+						gfY.add(track.getgfY());
+					}
+					else
+					{
+						Iterator<Float> itrgy = gfY.iterator();
+						while(itrgy.hasNext())
+						{
+							if(itrgy.next().equals(gfY.get(0)))
+							{
+								itrgy.remove();
+							}
+						}
+						
+						gfY.add(track.getgfY());
+					}
+					
 					tijd = 0;
 					repaint();
 				}
@@ -152,79 +159,31 @@ public class Canvas extends JFrame
 			g2d.setColor(Color.BLACK);
 			g2d.drawLine(50, 20, 50, 350);
 			g2d.drawLine(50, 155, 350, 155);
-			
-			Iterator<Short> itr = x.iterator();
-			short previousX=0;
-			short currentX = 0;
-			while(itr.hasNext())
+		
+			for(short p : x)
 			{
-				previousX=currentX;
-				
-				currentX = itr.next();
+				short sx = x.get(tijd);
 				g2d.setColor(Color.RED);
-				g2d.drawLine(tijd+49,(int)previousX+33, tijd+50, (int)currentX+33);
-				tijd++;
-			}
-			
-
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			g2d.setColor(Color.GREEN);
-			Iterator<Short> itr2 = z.iterator();
-			short previousZ=0;
-			short currentZ = 0;
-			while(itr2.hasNext())
-			{
-				if(tijd < 1)
-				{
-					previousZ = itr2.next();
-				}
-				else
-				{
-					previousZ=currentZ;
-				}
-				 currentZ = itr2.next();
+				g2d.drawLine(tijd+49,(int)previousX+33, tijd+50, (int)sx+33);
+				previousX = sx;
+//				
+//				short sy = y.get(tijd);
+//				g2d.setColor(Color.BLUE);
+//				g2d.drawLine(tijd+49, (int)oldY+33, tijd+50, (int)sy+33);
+//				oldY = sy;
+//				
+				short sz = z.get(tijd);
+				g2d.setColor(Color.GREEN.darker());
+				g2d.drawLine(tijd+49,(int)previousZ+9, tijd+50, (int)sz+9);
+				previousZ = sz;
 				
-				g2d.drawLine(tijd,(int)previousZ+28, tijd+1, (int)currentZ+28);
+//				float gf = gfY.get(tijd);
+//				g2d.setColor(Color.PINK);
+//				g2d.drawLine(tijd+49, ((int)oldGf*10) + 157, tijd+50,((int)gf*10) +157);
+//				oldGf = gf;
+//				
 				tijd++;
-				
 			}
-
-			Iterator<Short> itY = y.iterator();
-			while(itY.hasNext())
-			{
-				short s = itY.next();
-				g2d.setColor(Color.BLUE);
-				g2d.drawLine(tijd+49, (int)oldY+33, tijd+50, (int)s+33);
-				tijd++;
-				oldY = s;
-			}
-			
-			
 		}
 	}
 
