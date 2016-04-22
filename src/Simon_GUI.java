@@ -77,12 +77,13 @@ public class Simon_GUI extends JFrame
 			g2d.setColor(track.getColors().get(2));
 			g2d.fillRect(125, 250, 125,125);
 			g2d.setColor(Color.BLACK);
-			g2d.drawString("Total Score: " + track.getScore(), 150, 200);
-			g2d.drawString("Press 1 to start a round", 150, 400);
 			g2d.drawString("Player 1: "+ track.getPlayer1(), 10, 10);
 			g2d.drawString("Player 2: "+ track.getPlayer2(), 10, 400);
 			g2d.drawString("Player 3: "+ track.getPlayer3(), 400, 10);
 			g2d.drawString("Player 4: "+ track.getPlayer4(), 400, 400);
+			g2d.drawString("Total Score: " + track.getScore(), 150, 200);
+			g2d.drawString("Press 1 to start a round", 150, 400);
+			
 		}
 	}
 
