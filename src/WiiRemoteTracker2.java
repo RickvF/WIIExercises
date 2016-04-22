@@ -37,9 +37,9 @@ public class WiiRemoteTracker2 implements WiimoteListener
 			wiimote.setIrSensitivity(3);
 			wiimote.activateMotionSensing();
 			
-			wiimote.setAccelerationThreshold(-5);
-			wiimote.activateSmoothing();
-			wiimote.setAlphaSmoothingValue(3.0f);
+//			wiimote.setAccelerationThreshold(-5);
+//			wiimote.activateSmoothing();
+//			wiimote.setAlphaSmoothingValue(3.0f);
 		}
 	}	
 	

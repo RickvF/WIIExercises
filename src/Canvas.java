@@ -46,7 +46,12 @@ public class Canvas extends JFrame
 		short oldY = 0;
 		short previousZ = 0;
 		short previousX = 0;
-		float oldGf = 0;
+		int piektel = 0;
+		long startTijd = 0;
+		long eindTijd = 0;
+		long snelheid = 0;
+		double snelheid2 = 0;
+		int snelheid3 = 0;
 		
 		public Panel()
 		{
@@ -59,8 +64,6 @@ public class Canvas extends JFrame
 			z = new ArrayList<>();
 			
 			y = new ArrayList<>();
-			
-			gfY = new ArrayList<>();
 			
 			ActionListener update = new ActionListener()
 			{
@@ -106,6 +109,41 @@ public class Canvas extends JFrame
 					
 					if(z.size() < 300)
 					{
+						if(z.size() > 11)
+						{
+							if(track.getZ() > 160 && z.get(z.size()-10) < 130)
+							{
+								piektel ++;
+								if(piektel == 1)
+								{
+									startTijd = System.currentTimeMillis();
+								}
+								else if(piektel > 2)
+								{
+									eindTijd = System.currentTimeMillis();
+									berekenTijd();
+									
+									piektel = 0;
+								}
+							}
+							else if(track.getZ() < 130 && z.get(z.size()-10) > 160)
+							{
+								piektel++;
+								
+								if(piektel == 1)
+								{
+									startTijd = System.currentTimeMillis();
+								}
+								else if(piektel > 2)
+								{
+									
+									eindTijd = System.currentTimeMillis();
+									berekenTijd();
+									piektel = 0;
+								}
+							}
+							
+						}
 						z.add(track.getZ());
 					}
 					else
@@ -122,34 +160,31 @@ public class Canvas extends JFrame
 						z.add(track.getZ());
 					}
 					
-					
-					if(gfY.size() < 300)
-					{
-						gfY.add(track.getgfY());
-					}
-					else
-					{
-						Iterator<Float> itrgy = gfY.iterator();
-						while(itrgy.hasNext())
-						{
-							if(itrgy.next().equals(gfY.get(0)))
-							{
-								itrgy.remove();
-							}
-						}
-						
-						gfY.add(track.getgfY());
-					}
-					
 					tijd = 0;
 					repaint();
 				}
 				
 			};
 			
-			time = new Timer(1000/100, update);
+			time = new Timer(1000/60, update);
 			time.start();
 		}
+		
+		public void berekenTijd()
+		{
+			snelheid = eindTijd - startTijd;
+			//System.out.println(snelheid);
+			if(snelheid > 100)
+			{
+				snelheid2 = (double) (snelheid / 1000);
+				System.out.println(snelheid2);
+				snelheid2 = (double) (1/snelheid2);
+				
+			}
+			
+		}
+		
+		
 		
 		public void paintComponent(Graphics g)
 		{
@@ -159,29 +194,25 @@ public class Canvas extends JFrame
 			g2d.setColor(Color.BLACK);
 			g2d.drawLine(50, 20, 50, 350);
 			g2d.drawLine(50, 155, 350, 155);
+			g2d.drawString("omwent/sec: " + snelheid2, 100, 20);
 		
-			for(short p : x)
+			for(short p : z)
 			{
-				short sx = x.get(tijd);
-				g2d.setColor(Color.RED);
-				g2d.drawLine(tijd+49,(int)previousX+33, tijd+50, (int)sx+33);
-				previousX = sx;
-//				
+//				short sx = x.get(tijd);
+//				g2d.setColor(Color.RED);
+//				g2d.drawLine(tijd+49,(int)previousX+33, tijd+50, (int)sx+33);
+//				previousX = sx;
+				
 //				short sy = y.get(tijd);
 //				g2d.setColor(Color.BLUE);
 //				g2d.drawLine(tijd+49, (int)oldY+33, tijd+50, (int)sy+33);
 //				oldY = sy;
-//				
+				
 				short sz = z.get(tijd);
 				g2d.setColor(Color.GREEN.darker());
 				g2d.drawLine(tijd+49,(int)previousZ+9, tijd+50, (int)sz+9);
 				previousZ = sz;
 				
-//				float gf = gfY.get(tijd);
-//				g2d.setColor(Color.PINK);
-//				g2d.drawLine(tijd+49, ((int)oldGf*10) + 157, tijd+50,((int)gf*10) +157);
-//				oldGf = gf;
-//				
 				tijd++;
 			}
 		}
