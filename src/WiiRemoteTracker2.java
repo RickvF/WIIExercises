@@ -16,6 +16,11 @@ import wiiusej.wiiusejevents.wiiuseapievents.StatusEvent;
 
 public class WiiRemoteTracker2 implements WiimoteListener
 {
+	public static void main(String[] args)
+	{
+		new WiiRemoteTracker2();
+	}
+	
 	Wiimote wiimote;
 	public WiiRemoteTracker2()
 	{
@@ -27,7 +32,8 @@ public class WiiRemoteTracker2 implements WiimoteListener
 			wiimote.setLeds(false, true, true, true);
 			wiimote.activateIRTRacking();
 			wiimote.addWiiMoteEventListeners(this);
-	
+			wiimote.activateMotionSensing();
+			wiimote.activateContinuous();
 			// Set IR sensivity stuff
 			wiimote.setIrSensitivity(0);
 			wiimote.setIrSensitivity(3);
@@ -65,6 +71,7 @@ public class WiiRemoteTracker2 implements WiimoteListener
 	public void onExpansionEvent(ExpansionEvent arg0)
 	{		
 		
+		
 	}
 
 	@Override
@@ -91,14 +98,16 @@ public class WiiRemoteTracker2 implements WiimoteListener
 	@Override
 	public void onMotionSensingEvent(MotionSensingEvent arg0)
 	{
-		// TODO Auto-generated method stub
-		
+		System.out.println(arg0.getGforce()) ;
+		System.out.println(arg0.getOrientation()) ;
+		System.out.println(arg0.getRawAcceleration()) ;
 	}
 
 	@Override
 	public void onNunchukInsertedEvent(NunchukInsertedEvent arg0)
 	{
 		System.out.println("Nunchuck insert");
+
 	}
 
 	@Override
