@@ -43,7 +43,12 @@ public class WiiMoteTracker implements WiimoteListener
 	private Timer timer;									//Timer which contains the amount of time to wait before changing the color back to the original one
 	private Wiimote wiimote;								//Wiiremote which is used
 	private int changedColorLocation;						//Location of the changedColor in the ArrayList simon.
-	
+	private Wiimote[] wiimotes;
+	private int player1 = 0;
+	private int player2 = 0;
+	private int player3 = 0;
+	private int player4 = 0;
+
 	public WiiMoteTracker()
 	{
 		//adds button colors to array
@@ -53,20 +58,21 @@ public class WiiMoteTracker implements WiimoteListener
 		colors.add(Color.GREEN);
 		
 		//Searching for WiiRemotes
-		Wiimote[] wiimotes = WiiUseApiManager.getWiimotes(1, true);
+		 wiimotes = WiiUseApiManager.getWiimotes(4, true);
 		//checking if there are wii remotes connected. If so set led 2,3,4 on
 		//else exit program
-		if(wiimotes != null)
+		for(Wiimote wiimote: wiimotes)
 		{
-			wiimote = wiimotes[0];
 			wiimote.setLeds(false, true, true, true);
 			wiimote.addWiiMoteEventListeners(this);
 		}
-		else
+		
+		if (wiimotes == null)
 		{
 			System.out.println("No Wii Remotes found");
 			System.exit(0);
 		}
+		
 		//Timer which on tick changes the color of the rectangle back to the original one.
 		ActionListener update = new ActionListener()
 		{
@@ -103,13 +109,19 @@ public class WiiMoteTracker implements WiimoteListener
 		{
 			return simon.size() -1;
 		}
+		
+		player1 = 0;
+		player2 = 0;
+		player3 = 0;
+		player4 = 0;
 		return 0;
 	}
 	//Changes color back to the original one
 	//Also stops timer and rumble if necesairy
 	public void changeColorBack()
 	{
-		wiimote.deactivateRumble();
+		for(Wiimote wiimote : wiimotes){
+		wiimote.deactivateRumble();}
 		colors.set(changedColorLocation,changedColor);
 		if( simon.size()-1 > currentSimon)
 		{
@@ -132,7 +144,8 @@ public class WiiMoteTracker implements WiimoteListener
 		}
 		else
 		{
-			wiimote.activateRumble();
+			for(Wiimote wiimote : wiimotes){
+			wiimote.activateRumble();}
 			timer.start();
 			simon.clear();
 			pressCounter = 0;
@@ -140,12 +153,29 @@ public class WiiMoteTracker implements WiimoteListener
 		}}
 		catch(Exception e)
 		{
-			wiimote.activateRumble();
+			for(Wiimote wiimote : wiimotes){
+			wiimote.activateRumble();}
 			timer.start();
 			simon.clear();
 			pressCounter = 0;
 			currentSimon =0;
 		}
+	}
+	public int getPlayer1()
+	{
+		return player1;
+	}
+	public int getPlayer2()
+	{
+		return player2;
+	}
+	public int getPlayer3()
+	{
+		return player3;
+	}
+	public int getPlayer4()
+	{
+		return player4;
 	}
 	//Handles the buttons pressed on the wii remote.
 	
@@ -157,7 +187,8 @@ public class WiiMoteTracker implements WiimoteListener
 			{ 
 				if(pressCounter != simon.size() )
 				{
-					wiimote.activateRumble();
+					for(Wiimote wiimote : wiimotes){
+					wiimote.activateRumble();}
 					timer.start();
 					simon.clear();
 				}
@@ -173,6 +204,7 @@ public class WiiMoteTracker implements WiimoteListener
 		if(arg0.isButtonUpPressed())
 		{
 			checkSimon(0);
+			
 		}
 		else if(arg0.isButtonDownPressed())
 		{
@@ -190,11 +222,28 @@ public class WiiMoteTracker implements WiimoteListener
 		{
 			checkSimon(-1);			
 		}
+		switch (arg0.getWiimoteId()) {
+		case 1:		
+			player1++;
+			break;
+		case 2:
+			player2++;
+			break;
+		case 3:
+			player3++;
+			break;
+		case 4:
+			player4++;
+			break;
+		default:
+			break;
+		}
 	}
 	//exits game if A&B are pressed together.
 	if(arg0.isButtonAPressed() && arg0.isButtonBPressed())
 	{
-		wiimote.deactivateRumble();
+		for(Wiimote wiimote : wiimotes){
+		wiimote.deactivateRumble();}
 		System.exit(0);
 	}
 	//registers lastButtonPressed
