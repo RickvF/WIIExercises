@@ -17,6 +17,12 @@ import wiiusej.wiiusejevents.wiiuseapievents.StatusEvent;
 public class WiiRemoteTracker2 implements WiimoteListener
 {
 	Wiimote wiimote;
+	
+	public static void main(String[] args)
+	{
+		new WiiRemoteTracker2();
+	}
+	
 	public WiiRemoteTracker2()
 	{
 			
@@ -31,6 +37,7 @@ public class WiiRemoteTracker2 implements WiimoteListener
 			// Set IR sensivity stuff
 			wiimote.setIrSensitivity(0);
 			wiimote.setIrSensitivity(3);
+			wiimote.activateMotionSensing();
 		}
 	}	
 	
@@ -43,7 +50,7 @@ public class WiiRemoteTracker2 implements WiimoteListener
 	@Override
 	public void onClassicControllerInsertedEvent(ClassicControllerInsertedEvent arg0)
 	{
-		// TODO Auto-generated method stub
+		
 		
 	}
 
@@ -91,20 +98,20 @@ public class WiiRemoteTracker2 implements WiimoteListener
 	@Override
 	public void onMotionSensingEvent(MotionSensingEvent arg0)
 	{
-		// TODO Auto-generated method stub
-		
+		System.out.println("X: " + arg0.getGforce().getX() + " Y: " + arg0.getGforce().getY() + " Z: " + arg0.getGforce().getZ());
+		System.out.println("Pitch: " + arg0.getOrientation().getPitch() + " Roll: " + arg0.getOrientation().getRoll() + " Yaw: " + arg0.getOrientation().getYaw());
 	}
 
 	@Override
 	public void onNunchukInsertedEvent(NunchukInsertedEvent arg0)
 	{
-		System.out.println("Nunchuck insert");
+		System.out.println("Nunchuck insert!!!!");
 	}
 
 	@Override
 	public void onNunchukRemovedEvent(NunchukRemovedEvent arg0)
 	{
-		System.out.println("Nunchuck removed");
+		System.out.println("Nunchuck removed!!!!!!!!!!");
 	}
 
 	@Override
