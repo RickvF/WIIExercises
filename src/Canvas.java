@@ -36,6 +36,12 @@ public class Canvas extends JFrame
 		WiiRemoteTracker2 track;
 		Timer time;
 		ArrayList<Short> x;
+		
+		
+		
+		
+		
+		ArrayList<Short> z;
 		int tijd = 0;
 		
 		public Panel()
@@ -46,6 +52,12 @@ public class Canvas extends JFrame
 			
 			x = new ArrayList<>();
 			
+			
+			
+			
+			
+			z = new ArrayList<>();
+			
 			ActionListener update = new ActionListener()
 			{
 
@@ -55,6 +67,11 @@ public class Canvas extends JFrame
 					if(x.size() < 300)
 					{
 						x.add(track.getX());
+						
+						
+						
+						
+						z.add(track.getZ());
 					}
 					else
 					{
@@ -68,6 +85,33 @@ public class Canvas extends JFrame
 						}
 						
 						x.add(track.getX());
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						Iterator<Short> itr2=z.iterator();
+						while(itr2.hasNext())
+						{
+							if(itr2.next().equals(z.get(0)))
+									{
+								itr2.remove();
+									}
+						}
+						z.add(track.getZ());
 					}
 					tijd = 0;
 					repaint();
@@ -103,6 +147,53 @@ public class Canvas extends JFrame
 				 currentX = itr.next();
 				
 				g2d.drawLine(tijd+48,(int)previousX+28, tijd+49, (int)currentX+28);
+				tijd++;
+				
+			}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			g2d.setColor(Color.GREEN);
+			Iterator<Short> itr2 = z.iterator();
+			short previousZ=0;
+			short currentZ = 0;
+			while(itr2.hasNext())
+			{
+				if(tijd < 1)
+				{
+					previousZ = itr2.next();
+				}
+				else
+				{
+					previousZ=currentZ;
+				}
+				 currentZ = itr2.next();
+				
+				g2d.drawLine(tijd,(int)previousZ+28, tijd+1, (int)currentZ+28);
 				tijd++;
 				
 			}
