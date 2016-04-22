@@ -75,23 +75,34 @@ public class Canvas extends JFrame
 				
 			};
 			
-			time = new Timer(1000/10, update);
+			time = new Timer(1000/100, update);
 			time.start();
 		}
 		
 		public void paintComponent(Graphics g)
 		{
+			
 			super.paintComponent(g);
 			Graphics2D g2d = (Graphics2D) g;
 			g2d.setColor(Color.BLACK);
 			g2d.drawLine(50, 20, 50, 350);
 			g2d.drawLine(50, 155, 350, 155);
-			
 			Iterator<Short> itr = x.iterator();
+			short previousX=0;
+			short currentX = 0;
 			while(itr.hasNext())
 			{
-				short s = itr.next();
-				g2d.drawLine((int)s, tijd+50, (int)s, tijd+50);
+				if(tijd < 1)
+				{
+					previousX = itr.next();
+				}
+				else
+				{
+					previousX=currentX;
+				}
+				 currentX = itr.next();
+				
+				g2d.drawLine(tijd+48,(int)previousX+28, tijd+49, (int)currentX+28);
 				tijd++;
 				
 			}

@@ -16,7 +16,7 @@ import wiiusej.wiiusejevents.wiiuseapievents.StatusEvent;
 
 public class WiiRemoteTracker2 implements WiimoteListener
 {
-	Wiimote wiimote;
+	private Wiimote wiimote;
 	short X;
 	
 	public WiiRemoteTracker2()
