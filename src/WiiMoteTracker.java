@@ -63,9 +63,24 @@ public class WiiMoteTracker implements WiimoteListener
 		 wiimotes = WiiUseApiManager.getWiimotes(4, true);
 		//checking if there are wii remotes connected. If so set led 2,3,4 on
 		//else exit program
+		 int wiimoteNumber = 0;
 		for(Wiimote wiimote: wiimotes)
 		{
-			wiimote.setLeds(false, true, true, true);
+			switch (wiimoteNumber) {
+			case 0:
+				wiimote.setLeds(true, false, false, false);
+				break;
+			case 1:
+				wiimote.setLeds(false, true,  false, false);
+				break;
+			case 2:
+				wiimote.setLeds(false, false, true, false);
+				break;
+			case 3:
+				wiimote.setLeds( false, false, false, true);
+				break;
+			}
+			wiimoteNumber++;
 			wiimote.addWiiMoteEventListeners(this);
 		}
 		
@@ -284,6 +299,10 @@ public class WiiMoteTracker implements WiimoteListener
 			{
 				JOptionPane.showMessageDialog(null, "Stop Pushing nunchuk buttons");
 			}
+//			if(nc.isThereNunchukJoystickEvent())
+//			{
+//				System.out.println(nc.getNunchukJoystickEvent().getAngle());
+//			}
 		}
 		
 	}
