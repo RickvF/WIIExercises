@@ -18,15 +18,10 @@ public class WiiRemoteTracker2 implements WiimoteListener
 {
 	Wiimote wiimote;
 	
-	public static void main(String[] args)
-	{
-		new WiiRemoteTracker2();
-	}
-	
 	public WiiRemoteTracker2()
 	{
 			
-		Wiimote[] wiimotes = WiiUseApiManager.getWiimotes(1, true);
+		Wiimote[] wiimotes = WiiUseApiManager.getWiimotes(2, true);
 		if(wiimotes != null)
 		{
 			wiimote = wiimotes[0];
@@ -98,8 +93,11 @@ public class WiiRemoteTracker2 implements WiimoteListener
 	@Override
 	public void onMotionSensingEvent(MotionSensingEvent arg0)
 	{
-		System.out.println("X: " + arg0.getGforce().getX() + " Y: " + arg0.getGforce().getY() + " Z: " + arg0.getGforce().getZ());
-		System.out.println("Pitch: " + arg0.getOrientation().getPitch() + " Roll: " + arg0.getOrientation().getRoll() + " Yaw: " + arg0.getOrientation().getYaw());
+//		System.out.println("X: " + arg0.getRawAcceleration().getX());
+//		System.out.println("Y: " + arg0.getRawAcceleration().getY());
+//		System.out.println("Z: " + arg0.getRawAcceleration().getZ());
+//		System.out.println(arg0.toString());
+		
 	}
 
 	@Override
