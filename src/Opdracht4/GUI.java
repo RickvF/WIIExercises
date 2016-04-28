@@ -9,13 +9,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 /**
- * Simon Says (Final Version)
+ * Opdracht 4 (Final Version)
  * @author Sascha Worms
  * @author Rick van Fessem
- * @version Final 22-04-2016
+ * @version Final 28-04-2016
  * @category games
- * Description : Simple Simon Says game that uses four colored fields which will light up. 
- * The user then has to mimick these moves using the buttons on the wiiRemote.
  * 
  * This Class the User Interface
  */
@@ -26,7 +24,7 @@ public class GUI extends JFrame
 	{
 		new GUI();
 	}
-	//Constructor of Simon_GUI() Creating GUI and setting default size
+	//Constructor of GUI() Creating GUI and setting default size
 	public GUI()
 	{
 		super("GUI");
@@ -75,6 +73,7 @@ public class GUI extends JFrame
 			g2d.scale(1, 1);
 			for(int i = 0; i<x.size(); i++)
 			{
+				//Drawing all point 
 				g2d.fillOval(x.get(i)-5, y.get(i)-5, 10, 10);
 			}
 		}

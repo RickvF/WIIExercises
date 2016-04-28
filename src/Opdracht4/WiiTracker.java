@@ -40,7 +40,7 @@ public class WiiTracker implements WiimoteListener
 			case 0:
 				wiimote.setLeds(true, false, false, false);
 				wiimote.activateIRTRacking();
-				wiimote.setSensorBarBelowScreen();
+				wiimote.setSensorBarAboveScreen(); //BOVEN HET SCHERM SASCHA BLAME YOU!!!!
 				wiimote.setVirtualResolution(500, 500);
 				wiimote.setIrSensitivity(2);
 				
@@ -48,7 +48,7 @@ public class WiiTracker implements WiimoteListener
 			case 1:
 				wiimote.setLeds(false, true,  false, false);
 				wiimote.activateIRTRacking();
-				wiimote.setSensorBarBelowScreen();
+				wiimote.setSensorBarAboveScreen(); //BOVEN HET SCHERM SASCHA BLAME YOU!!!!
 				wiimote.setVirtualResolution(500, 500);
 				wiimote.setIrSensitivity(2);
 				
@@ -56,7 +56,7 @@ public class WiiTracker implements WiimoteListener
 			case 2:
 				wiimote.setLeds(false, false, true, false);
 				wiimote.activateIRTRacking();
-				wiimote.setSensorBarBelowScreen();
+				wiimote.setSensorBarAboveScreen(); //BOVEN HET SCHERM SASCHA BLAME YOU!!!!
 				wiimote.setVirtualResolution(500, 500);
 				wiimote.setIrSensitivity(2);
 				
@@ -64,7 +64,7 @@ public class WiiTracker implements WiimoteListener
 			case 3:
 				wiimote.setLeds( false, false, false, true);
 				wiimote.activateIRTRacking();
-				wiimote.setSensorBarBelowScreen();
+				wiimote.setSensorBarAboveScreen(); //BOVEN HET SCHERM SASCHA BLAME YOU!!!!
 				wiimote.setVirtualResolution(500, 500);
 				wiimote.setIrSensitivity(2);
 				
@@ -79,6 +79,7 @@ public class WiiTracker implements WiimoteListener
 			System.out.println("No Wii Remotes found");
 			System.exit(0);
 		}
+		
 		
 		
 	}
