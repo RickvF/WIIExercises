@@ -1,3 +1,4 @@
+package Opdracht2;
 import wiiusej.WiiUseApiManager;
 import wiiusej.Wiimote;
 import wiiusej.wiiusejevents.physicalevents.ExpansionEvent;

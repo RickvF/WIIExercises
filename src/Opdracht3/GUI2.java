@@ -1,3 +1,4 @@
+package Opdracht3;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -18,15 +19,15 @@ import javax.swing.Timer;
  * 
  * This Class the User Interface
  */
-public class Simon_GUI extends JFrame
+public class GUI2 extends JFrame
 {
 	//Creating a new Instance of the game
 	public static void main(String[] args)
 	{
-		new Simon_GUI();
+		new GUI2();
 	}
 	//Constructor of Simon_GUI() Creating GUI and setting default size
-	public Simon_GUI()
+	public GUI2()
 	{
 		super("Simon");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -40,13 +41,13 @@ public class Simon_GUI extends JFrame
 	//JPanel Class
 	class Panel extends JPanel
 	{
-		WiiMoteTracker track; //remote with game commands
+		WiiMoteTracker2 track; //remote with game commands
 		Timer time;           //timer for updating GUI
 		
 		public Panel()
 		{
 			super();			
-			track = new WiiMoteTracker();
+			track = new WiiMoteTracker2();
 			//repainting the user interface each timer tick
 			ActionListener update = new ActionListener()
 			{
@@ -59,7 +60,7 @@ public class Simon_GUI extends JFrame
 			};
 			
 			//setting refreshrate at 60fps
-			time = new Timer(1000/60, update);
+			time = new Timer(1000/30, update);
 			time.start();
 		}
 		
@@ -67,23 +68,14 @@ public class Simon_GUI extends JFrame
 		{
 			super.paintComponent(g);
 			Graphics2D g2d = (Graphics2D) g;
-			//painting rectangles whith colors from WiiMoteTracker track
-			g2d.setColor(track.getColors().get(0));
-			g2d.fillRect(125, 0, 125, 125);
-			g2d.setColor(track.getColors().get(1));
-			g2d.fillRect(0, 125, 125, 125);
-			g2d.setColor(track.getColors().get(3));
-			g2d.fillRect(250, 125, 125, 125);
-			g2d.setColor(track.getColors().get(2));
-			g2d.fillRect(125, 250, 125,125);
-			g2d.setColor(Color.BLACK);
-			g2d.drawString("Player 1: "+ track.getPlayer1(), 10, 10);
-			g2d.drawString("Player 2: "+ track.getPlayer2(), 10, 400);
-			g2d.drawString("Player 3: "+ track.getPlayer3(), 400, 10);
-			g2d.drawString("Player 4: "+ track.getPlayer4(), 400, 400);
-			g2d.drawString("Total Score: " + track.getScore(), 150, 200);
-			g2d.drawString("Press 1 to start a round", 150, 400);
-			
+			g2d.drawString("Y: " + (track.getNunchukX()-240) + " X: " + (track.getNunchukY()- 240), 10, 10);
+			g2d.translate(250, 250);
+			g2d.rotate((Math.PI/180)*(-90+track.getNunchukRoll()));
+			g2d.translate(-250, -250);
+			g2d.drawLine(250, 150, 250,350 );
+			g2d.drawLine(150, 250, 350, 250);
+			g2d.drawOval(150,150, 200, 200);
+			g2d.fillOval(track.getNunchukX(), track.getNunchukY(),20,20);
 		}
 	}
 
