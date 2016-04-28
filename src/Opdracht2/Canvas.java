@@ -110,7 +110,7 @@ public class Canvas extends JFrame
 					
 					if(z.size() < 300)
 					{
-						System.out.println(z);
+				
 						if(z.size() > 11)
 						{
 							if(track.getZ() > 160 && z.get(z.size()-10) < 130)
@@ -122,7 +122,7 @@ public class Canvas extends JFrame
 								}
 								else if(piektel > 2)
 								{
-									if(System.currentTimeMillis() - eindTijd > 500)
+									if(System.currentTimeMillis() - eindTijd > 300)
 									{
 										eindTijd = System.currentTimeMillis();
 										berekenTijd();
@@ -140,7 +140,7 @@ public class Canvas extends JFrame
 								}
 								else if(piektel > 2)
 								{
-									if(System.currentTimeMillis() - eindTijd > 500)
+									if(System.currentTimeMillis() - eindTijd > 300)
 									{
 										eindTijd = System.currentTimeMillis();
 										berekenTijd();
@@ -179,9 +179,8 @@ public class Canvas extends JFrame
 		public void berekenTijd()
 		{
 			snelheid = eindTijd - startTijd;
-			//System.out.println(snelheid);
-			snelheid2 = (double) (1/snelheid / 1000);
-			//System.out.println(snelheid2);
+			double speed = snelheid /1000.0;
+			snelheid2 = Math.round((1.0/speed)*100.0)/100.0;
 		}
 		
 		
