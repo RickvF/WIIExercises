@@ -173,15 +173,16 @@ public class Canvas extends JFrame
 		
 		public void berekenTijd()
 		{
+			
 			snelheid = eindTijd - startTijd;
-			//System.out.println(snelheid);
-			if(snelheid > 100)
-			{
-				snelheid2 = (double) (1/snelheid / 1000);
-				System.out.println(snelheid2);
-				
-				
-			}
+			System.out.println(snelheid);
+//			if(snelheid > 100)
+//			{
+//				snelheid2 = (double) (1/snelheid / 1000);
+//				System.out.println(snelheid2);
+//				
+//				
+//			}
 			
 		}
 		

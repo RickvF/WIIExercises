@@ -1,19 +1,11 @@
 package Opdracht3;
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-
 import javax.swing.JOptionPane;
-import javax.swing.Timer;
 
 import wiiusej.WiiUseApiManager;
 import wiiusej.Wiimote;
 import wiiusej.wiiusejevents.physicalevents.ExpansionEvent;
-import wiiusej.wiiusejevents.physicalevents.GuitarHeroEvent;
 import wiiusej.wiiusejevents.physicalevents.IREvent;
 import wiiusej.wiiusejevents.physicalevents.MotionSensingEvent;
-import wiiusej.wiiusejevents.physicalevents.NunchukButtonsEvent;
 import wiiusej.wiiusejevents.physicalevents.NunchukEvent;
 import wiiusej.wiiusejevents.physicalevents.WiimoteButtonsEvent;
 import wiiusej.wiiusejevents.utils.WiimoteListener;

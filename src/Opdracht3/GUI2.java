@@ -1,5 +1,4 @@
 package Opdracht3;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;

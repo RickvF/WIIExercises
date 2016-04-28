@@ -32,7 +32,7 @@ public class GUI extends JFrame
 		
 		setContentPane(new Panel());
 		setVisible(true);
-		setSize(800, 800);
+		setSize(500, 500);
 		setResizable(false);
 		setLocationRelativeTo(null);
 	}
