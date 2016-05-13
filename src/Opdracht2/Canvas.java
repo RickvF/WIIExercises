@@ -197,15 +197,15 @@ public class Canvas extends JFrame
 		
 			for(short p : z)
 			{
-//				short sx = x.get(tijd);
-//				g2d.setColor(Color.RED);
-//				g2d.drawLine(tijd+49,(int)previousX+33, tijd+50, (int)sx+33);
-//				previousX = sx;
+				short sx = x.get(tijd);
+				g2d.setColor(Color.RED);
+				g2d.drawLine(tijd+49,(int)previousX+33, tijd+50, (int)sx+33);
+				previousX = sx;
 				
-//				short sy = y.get(tijd);
-//				g2d.setColor(Color.BLUE);
-//				g2d.drawLine(tijd+49, (int)oldY+33, tijd+50, (int)sy+33);
-//				oldY = sy;
+				short sy = y.get(tijd);
+				g2d.setColor(Color.BLUE);
+				g2d.drawLine(tijd+49, (int)oldY+33, tijd+50, (int)sy+33);
+				oldY = sy;
 				
 				short sz = z.get(tijd);
 				g2d.setColor(Color.GREEN.darker());
