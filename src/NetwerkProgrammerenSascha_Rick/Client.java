@@ -150,7 +150,7 @@ public class Client extends JFrame implements Runnable, Serializable
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				// TODO Auto-generated method stub
+				randomFillCombo();
 				
 			}
 		});
@@ -203,6 +203,7 @@ public class Client extends JFrame implements Runnable, Serializable
 		questionPane.add(input);
 		
 		fillCombobox();
+		randomFillCombo();
 	}
 	
 	private void fillCombobox()
