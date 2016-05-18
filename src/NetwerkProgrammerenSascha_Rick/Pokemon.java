@@ -1,8 +1,16 @@
 package NetwerkProgrammerenSascha_Rick;
 
 import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.nio.file.FileSystemNotFoundException;
 import java.util.ArrayList;
+
+
 
 public class Pokemon implements Comparable<String>, Serializable
 {
@@ -62,5 +70,38 @@ public class Pokemon implements Comparable<String>, Serializable
 	{
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	public void saveSchedule()throws FileSystemNotFoundException{
+		try {
+			FileOutputStream fos = new FileOutputStream("Pokemon");
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(this);
+			oos.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	static String pokomen = "Bulbasaur";
+	
+	public static Pokemon load()throws FileNotFoundException{
+		try{
+			FileInputStream fis = new FileInputStream(pokomen);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			
+			Object object = ois.readObject();
+			ois.close();
+			if(object instanceof Pokemon){
+				System.out.println("Pokemon has loaded.");
+				Pokemon temp = (Pokemon) object;
+								
+				return temp;
+			}
+			return null;
+		}
+		catch(Exception ex) {
+			ex.printStackTrace();
+		}
+		return null;
 	}
 }
