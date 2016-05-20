@@ -1,3 +1,5 @@
+package NetwerkProgrammerenSascha_Rick;
+
 
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
