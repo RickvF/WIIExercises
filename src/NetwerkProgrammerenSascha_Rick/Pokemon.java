@@ -78,7 +78,7 @@ public class Pokemon implements Comparable<String>, Serializable
 
     public void savePokemon()throws FileSystemNotFoundException{
         try {
-            FileOutputStream fos = new FileOutputStream(name+ ".pkm");
+            FileOutputStream fos = new FileOutputStream(name+ ".pkb");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(this);
             oos.close();

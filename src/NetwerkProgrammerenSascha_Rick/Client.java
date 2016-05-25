@@ -77,7 +77,7 @@ public class Client extends JFrame implements Runnable, Serializable
 		
 		//setup data pokemon load
 		File f = new File("Files");
-//		fill(f);
+		fill(f);
 		
 		//method to add the buttons 
 		choosePokemon();
