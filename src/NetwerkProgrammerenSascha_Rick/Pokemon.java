@@ -89,10 +89,13 @@ public class Pokemon implements Comparable<String>, Serializable
 
     public Pokemon load(String pokemon)throws FileNotFoundException{
         try{
-            FileInputStream fis = new FileInputStream(pokemon);
+        	String plek = "Files\\" + pokemon;
+        	
+            FileInputStream fis = new FileInputStream(plek);
             ObjectInputStream ois = new ObjectInputStream(fis);
 
             Object object = ois.readObject();
+            
             ois.close();
             if(object instanceof Pokemon){
                 System.out.println(pokemon +" has been caught succesfully");

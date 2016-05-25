@@ -285,6 +285,8 @@ public class Client extends JFrame implements Runnable, Serializable
 					if(getFileExtension(files[i]).equals("pkb"))
 					{
 						//TODO
+						
+						System.out.println(files[i].getName());
 						Pokemon p = new Pokemon(files[i].getName());
 						pokemons.add(p);
 						
