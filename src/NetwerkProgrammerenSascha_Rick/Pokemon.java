@@ -1,7 +1,6 @@
 package NetwerkProgrammerenSascha_Rick;
 
 
-import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -91,7 +90,7 @@ public class Pokemon implements Comparable<String>, Serializable
 
     public Pokemon load(String pokemon)throws FileNotFoundException{
         try{
-            FileInputStream fis = new FileInputStream(pokemon+".pkm");
+            FileInputStream fis = new FileInputStream(pokemon);
             ObjectInputStream ois = new ObjectInputStream(fis);
 
             Object object = ois.readObject();

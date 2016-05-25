@@ -6,8 +6,10 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.Socket;
@@ -16,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Set;
 
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -73,6 +76,10 @@ public class Client extends JFrame implements Runnable, Serializable
 		contentPane.add(buttonPane, BorderLayout.SOUTH);
 		contentPane.add(questionPane, BorderLayout.EAST);
 		
+		//setup data pokemon load
+		File f = new File("C:\\Users\\Rick\\Documents\\Technische Informatica Avans\\Jaar 1\\Periode 4\\Proftaak\\WII\\src");
+		fill(f);
+		
 		//method to add the buttons 
 		choosePokemon();
 		buttons();
@@ -118,11 +125,12 @@ public class Client extends JFrame implements Runnable, Serializable
 	
 	private void choosePokemon()
 	{
+		//making the grid with buttons
 		for(int x = 0; x < 3; x++)
 		{
 			for(int y = 0; y < 5; y++)
 			{
-				JButton b = new JButton((Icon) pokemons.get(i).getImage());
+				JButton b = new JButton(new ImageIcon("Data" + "\\" + pokemons.get(i).getName() + ".png"));
 				pokePane.add(b);
 				b.addActionListener(new ActionListener()
 				{
@@ -134,14 +142,14 @@ public class Client extends JFrame implements Runnable, Serializable
 					}
 				});
 				
-				i++;
+				//i++;
 			}
 		}
 	}
 	
 	private void buttons()
 	{
-		//send, quit, new game
+		//setup send, quit, new game buttons
 		
 		JButton send = new JButton("SEND");
 		send.addActionListener(new ActionListener()
@@ -179,6 +187,7 @@ public class Client extends JFrame implements Runnable, Serializable
 			}
 		});
 		
+		//add buttons to his JPanel
 		buttonPane.add(ngame);
 		buttonPane.add(quit);
 		buttonPane.add(send);
@@ -186,6 +195,7 @@ public class Client extends JFrame implements Runnable, Serializable
 	
 	private void questions()
 	{
+		//setup questionsbox
 		vragen = new JComboBox<String>();
 		vragen.addActionListener(new ActionListener()
 		{
@@ -199,6 +209,7 @@ public class Client extends JFrame implements Runnable, Serializable
 		});
 		questionPane.add(vragen);
 		
+		//setup dialog
 		input = new JTextArea();
 		questionPane.add(input);
 		
@@ -208,6 +219,7 @@ public class Client extends JFrame implements Runnable, Serializable
 	
 	private void fillCombobox()
 	{
+		//setup the questions
 		for(String t : types)
 		{
 			String q = "Is het type van deze pokemon.. " + t + "?";
@@ -233,6 +245,7 @@ public class Client extends JFrame implements Runnable, Serializable
 	
 	private void randomFillCombo()
 	{
+		//random questions to the JCombobox
 		vragen.removeAll();
 		for(int i = 0; i<5; i++)
 		{
@@ -240,4 +253,45 @@ public class Client extends JFrame implements Runnable, Serializable
 			vragen.addItem(questions.get(g));
 		}
 	}
+	
+	private void fill(File file)
+	{
+		System.out.println("wiehoe");
+		//search .pkm files 
+		if(file.exists())
+		{
+			System.out.println(file);
+			if(file.isDirectory())
+			{
+				System.out.println(file);
+				File[] files = file.listFiles();
+				for(int i = 0; files != null && i < files.length; i++)
+				{
+					if(files[i].isDirectory())
+					{
+						fill(files[i]);
+					}
+					if(getFileExtension(files[i]).equals("pkm"))
+					{
+						//TODO
+						Pokemon p = new Pokemon(files[i].getName());
+						pokemons.add(p);
+						
+					}
+				}
+			}
+		}
+	}
+	
+	public String getFileExtension(File file) 
+	{
+		//search fileextension of the file
+        String fileName = file.getName();
+        if(fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
+        return fileName.substring(fileName.lastIndexOf(".")+1);
+        else return "";
+    }
+	
+	
+	
 }
