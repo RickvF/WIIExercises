@@ -78,7 +78,7 @@ public class Client extends JFrame implements Runnable, Serializable
 		
 		//setup data pokemon load
 		File f = new File("C:\\Users\\Rick\\Documents\\Technische Informatica Avans\\Jaar 1\\Periode 4\\Proftaak\\WII\\src");
-		fill(f);
+//		fill(f);
 		
 		//method to add the buttons 
 		choosePokemon();
@@ -142,7 +142,7 @@ public class Client extends JFrame implements Runnable, Serializable
 					}
 				});
 				
-				//i++;
+				i++;
 			}
 		}
 	}
@@ -271,7 +271,7 @@ public class Client extends JFrame implements Runnable, Serializable
 					{
 						fill(files[i]);
 					}
-					if(getFileExtension(files[i]).equals("pkm"))
+					if(getFileExtension(files[i]).equals("pkb"))
 					{
 						//TODO
 						Pokemon p = new Pokemon(files[i].getName());
